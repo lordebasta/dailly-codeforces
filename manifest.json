@@ -1,0 +1,13 @@
+{
+    "manifest_version": 3,
+    "name": "Daily Codeforces problem",
+    "description": "Extension that provides a daily problem on codeforces.",
+    "version": "1.0",
+    "action": {
+        "default_popup": "main.html",
+        "default_icon": "icon.png"
+    },
+    "host_permissions": [
+        "https://codeforces.com/*"
+    ]
+}
