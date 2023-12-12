@@ -7,6 +7,10 @@
         "default_popup": "main.html",
         "default_icon": "icon.png"
     },
+    "options_page": "options.html",
+    "permissions": [
+        "storage"
+    ],
     "host_permissions": [
         "https://codeforces.com/*"
     ]

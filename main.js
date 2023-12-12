@@ -10,27 +10,33 @@ function jsf32(a, b, c, d) {
     }
 }
 
-function getProblemsUnderRanking(problems, max_ranking) {
+function getProblemsInRanking(problems, min_ranking, max_ranking) {
     let result = []
     for (var x in problems) {
-        if (problems[x].rating < max_ranking) {
+        if (problems[x].rating <= max_ranking && problems[x] >= min_ranking) {
             result.push(problems[x])
         }
     }
     return result
 }
 
-fetch('https://codeforces.com/api/problemset.problems').then(r => r.text()).then(result => {
+fetch('https://codeforces.com/api/problemset.problems').then(r => r.text()).then(async result => {
     // Result now contains the response text, do what you want...
     result = JSON.parse(result)
 
     problems = result.result.problems
-    let candidates = getProblemsUnderRanking(problems, 1000)
+    chrome.storage.sync.get(
+        { mini: 800, maxi: 2200 },
+        (items) => {
+            let candidates = getProblemsInRanking(problems, items.mini, items.maxi)
+            let date = new Date()
+            let rand = jsf32(date.getFullYear(), date.getMonth(), date.getDay(), date.getDate())
+            console.log(candidates)
+            var item = candidates[Math.floor(rand() * candidates.length)];
+            console.log(candidates[item])
+            window.open("https://codeforces.com/problemset/problem/" + item.contestId + "/" + item.index, "_blank")
+        }
+    );
 
-    let date = new Date()
-    let rand = jsf32(date.getFullYear(), date.getMonth(), date.getDay(), date.getDate())
-
-    var item = candidates[Math.floor(rand() * candidates.length)];
-    window.open("https://codeforces.com/problemset/problem/" + item.contestId + "/" + item.index, "_blank")
 
 })
