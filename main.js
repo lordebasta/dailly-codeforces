@@ -48,7 +48,9 @@ fetch('https://codeforces.com/api/problemset.problems').then(r => r.text()).then
         (items) => {
             let candidates = getProblemsInRanking(problems, items.mini, items.maxi)
             let date = new Date()
-            let seed = cyrb128(date.toString())
+            date = date.getDate().toString() + date.getMonth().toString() + date.getFullYear().toString()
+            console.log(date)
+            let seed = cyrb128(date)
             let rand = jsf32(seed[0], seed[1], seed[2], seed[3])
             let index = rand()
             index = Math.floor(index * candidates.length)
