@@ -46,6 +46,7 @@ fetch('https://codeforces.com/api/problemset.problems').then(r => r.text()).then
     chrome.storage.sync.get(
         { mini: 800, maxi: 2200 },
         (items) => {
+            console.log(items)
             let candidates = getProblemsInRanking(problems, items.mini, items.maxi)
             let date = new Date()
             date = date.getDate().toString() + date.getMonth().toString() + date.getFullYear().toString()
